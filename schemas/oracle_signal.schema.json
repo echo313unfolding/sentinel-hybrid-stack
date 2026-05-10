@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "oracle_signal.schema.json",
+  "title": "Oracle Signal",
+  "description": "A risk or data signal from an oracle network or data feed provider. Sentinel consumes verified oracle outputs — it does not attest to external data.",
+  "type": "object",
+  "required": [
+    "signal_id",
+    "provider",
+    "signal_type",
+    "value",
+    "timestamp",
+    "hash"
+  ],
+  "properties": {
+    "signal_id": {
+      "type": "string",
+      "description": "Unique identifier for this signal."
+    },
+    "provider": {
+      "type": "string",
+      "description": "Name of the oracle or data feed provider."
+    },
+    "signal_type": {
+      "type": "string",
+      "enum": [
+        "price_feed",
+        "risk_score",
+        "sanctions_check",
+        "volatility_index",
+        "liquidity_metric",
+        "counterparty_rating",
+        "address_screening",
+        "custom"
+      ],
+      "description": "Type of oracle signal."
+    },
+    "asset_id": {
+      "type": "string",
+      "description": "Asset this signal relates to, if applicable."
+    },
+    "entity_id": {
+      "type": "string",
+      "description": "Entity this signal relates to, if applicable."
+    },
+    "value": {
+      "description": "The signal value. Type depends on signal_type.",
+      "oneOf": [
+        { "type": "number" },
+        { "type": "string" },
+        { "type": "boolean" },
+        { "type": "object" }
+      ]
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Provider's confidence in this signal."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the signal was generated."
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the signal should be considered stale."
+    },
+    "hash": {
+      "type": "string",
+      "description": "SHA256 of the canonical signal content."
+    },
+    "proof_reference": {
+      "type": "string",
+      "description": "Optional reference to a ZK proof or on-chain attestation."
+    }
+  }
+}

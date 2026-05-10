@@ -1,0 +1,86 @@
+{
+  "_comment": "Synthetic example. No real money, no real entities, no real KYC.",
+  "event_id": "evt_20260502_001",
+  "event_type": "transfer",
+  "asset_id": "0xABCD1234...tokenized_equity_demo",
+  "asset_type": "tokenized_equity",
+  "timestamp": "2026-05-02T18:00:00Z",
+  "amount": 50000.00,
+  "currency": "USD",
+  "from_entity": {
+    "entity_id": "entity_alice_demo",
+    "entity_type": "individual",
+    "jurisdiction": "US",
+    "wallet_address": "0x1111...demo",
+    "kyc_attestation_hash": "sha256:aaaa1111bbbb2222cccc3333dddd4444eeee5555ffff6666"
+  },
+  "to_entity": {
+    "entity_id": "entity_bob_demo",
+    "entity_type": "individual",
+    "jurisdiction": "SG",
+    "wallet_address": "0x2222...demo",
+    "kyc_attestation_hash": "sha256:7777888899990000aaaabbbbccccddddeeee1111ffff2222"
+  },
+  "chain_metadata": {
+    "chain_id": "ethereum_mainnet",
+    "block_number": 22000000,
+    "tx_hash": "0xdemo...synthetic",
+    "gas_price": 25.0
+  },
+  "context": {
+    "memo": "Synthetic demo transfer for adapter testing",
+    "tags": ["demo", "synthetic", "cross_jurisdiction"],
+    "related_event_ids": []
+  },
+
+  "_kyc_attestations": [
+    {
+      "attestation_id": "kyc_alice_demo_001",
+      "provider": "demo_kyc_provider",
+      "entity_id": "entity_alice_demo",
+      "status": "verified",
+      "risk_tier": "low",
+      "jurisdiction": "US",
+      "verification_level": "enhanced",
+      "timestamp": "2026-04-15T10:00:00Z",
+      "expires_at": "2027-04-15T10:00:00Z",
+      "hash": "sha256:aaaa1111bbbb2222cccc3333dddd4444eeee5555ffff6666"
+    },
+    {
+      "attestation_id": "kyc_bob_demo_001",
+      "provider": "demo_kyc_provider",
+      "entity_id": "entity_bob_demo",
+      "status": "verified",
+      "risk_tier": "medium",
+      "jurisdiction": "SG",
+      "verification_level": "basic",
+      "timestamp": "2026-03-01T14:00:00Z",
+      "expires_at": "2027-03-01T14:00:00Z",
+      "hash": "sha256:7777888899990000aaaabbbbccccddddeeee1111ffff2222"
+    }
+  ],
+
+  "_oracle_signals": [
+    {
+      "signal_id": "oracle_demo_001",
+      "provider": "demo_oracle",
+      "signal_type": "risk_score",
+      "entity_id": "entity_bob_demo",
+      "value": 0.62,
+      "confidence": 0.85,
+      "timestamp": "2026-05-02T17:55:00Z",
+      "expires_at": "2026-05-02T18:55:00Z",
+      "hash": "sha256:oracle_hash_demo_001"
+    },
+    {
+      "signal_id": "oracle_demo_002",
+      "provider": "demo_sanctions_screener",
+      "signal_type": "sanctions_check",
+      "entity_id": "entity_bob_demo",
+      "value": false,
+      "confidence": 0.99,
+      "timestamp": "2026-05-02T17:55:00Z",
+      "hash": "sha256:oracle_hash_demo_002"
+    }
+  ]
+}

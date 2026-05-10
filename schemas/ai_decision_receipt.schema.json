@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ai_decision_receipt.schema.json",
+  "title": "AI Decision Receipt",
+  "description": "Receipt emitted by Sentinel for every risk decision. Proves what model, with what inputs, at what time, produced what output.",
+  "type": "object",
+  "required": [
+    "receipt_version",
+    "event_id",
+    "asset_id",
+    "asset_type",
+    "policy_version",
+    "model_id",
+    "model_codec",
+    "runtime",
+    "memory_state_hash",
+    "input_attestation_hashes",
+    "decision",
+    "risk_level",
+    "reason_codes",
+    "timestamp",
+    "sha256"
+  ],
+  "properties": {
+    "receipt_version": {
+      "type": "string",
+      "const": "1.0",
+      "description": "Schema version for this receipt format."
+    },
+    "event_id": {
+      "type": "string",
+      "description": "The event this decision applies to."
+    },
+    "asset_id": {
+      "type": "string",
+      "description": "Identifier for the asset involved."
+    },
+    "asset_type": {
+      "type": "string",
+      "description": "Category of the regulated asset."
+    },
+    "policy_version": {
+      "type": "string",
+      "description": "Version identifier for the policy ruleset applied."
+    },
+    "model_id": {
+      "type": "string",
+      "description": "Model used for inference (e.g., 'zamba2-2.7b-sentinel-lora')."
+    },
+    "model_codec": {
+      "type": "string",
+      "description": "Compression codec applied to the model (e.g., 'hxq_affine_6')."
+    },
+    "runtime": {
+      "type": "string",
+      "description": "Inference runtime used (e.g., 'local_llama_cpp', 'native_hxq', 'python_transformers')."
+    },
+    "memory_state_hash": {
+      "type": "string",
+      "description": "SHA256 of Sentinel's event memory state at decision time."
+    },
+    "input_attestation_hashes": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "SHA256 hashes of all input attestations consumed for this decision."
+    },
+    "decision": {
+      "type": "string",
+      "enum": ["allow", "hold", "review", "escalate", "reject"],
+      "description": "Sentinel's recommendation."
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"],
+      "description": "Assessed risk level."
+    },
+    "reason_codes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "velocity",
+          "amount_threshold",
+          "counterparty_risk",
+          "jurisdiction_mismatch",
+          "jurisdiction_prohibited",
+          "sanctions_match",
+          "kyc_expired",
+          "kyc_missing",
+          "pattern_anomaly",
+          "time_anomaly",
+          "oracle_warning",
+          "policy_override",
+          "memory_pattern",
+          "first_interaction",
+          "custom"
+        ]
+      },
+      "description": "Machine-readable reason codes explaining the decision."
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Model confidence in the decision."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the decision was made."
+    },
+    "inference_time_ms": {
+      "type": "number",
+      "description": "Time spent on model inference in milliseconds."
+    },
+    "sha256": {
+      "type": "string",
+      "description": "SHA256 of all other fields in this receipt, computed over canonical JSON."
+    }
+  }
+}

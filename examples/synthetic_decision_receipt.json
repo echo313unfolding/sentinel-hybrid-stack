@@ -1,0 +1,35 @@
+{
+  "_comment": "Synthetic example. This receipt was not produced by a real model run.",
+  "receipt_version": "1.0",
+  "event_id": "evt_20260502_001",
+  "asset_id": "0xABCD1234...tokenized_equity_demo",
+  "asset_type": "tokenized_equity",
+  "policy_version": "policy_2026_05_02",
+  "model_id": "zamba2-2.7b-sentinel-lora",
+  "model_codec": "hxq_affine_6",
+  "runtime": "local_llama_cpp",
+  "memory_state_hash": "sha256:mem_state_demo_abc123def456",
+  "input_attestation_hashes": [
+    "sha256:aaaa1111bbbb2222cccc3333dddd4444eeee5555ffff6666",
+    "sha256:7777888899990000aaaabbbbccccddddeeee1111ffff2222",
+    "sha256:oracle_hash_demo_001",
+    "sha256:oracle_hash_demo_002"
+  ],
+  "decision": "review",
+  "risk_level": "high",
+  "reason_codes": [
+    "jurisdiction_mismatch",
+    "counterparty_risk",
+    "amount_threshold"
+  ],
+  "confidence": 0.82,
+  "timestamp": "2026-05-02T18:00:01Z",
+  "inference_time_ms": 340.5,
+  "sha256": "sha256:full_receipt_hash_demo_placeholder",
+
+  "_explanation": {
+    "jurisdiction_mismatch": "Sender jurisdiction US, receiver jurisdiction SG — cross-border transfer triggers review policy.",
+    "counterparty_risk": "Receiver KYC risk_tier is medium and oracle risk_score is 0.62 (above 0.5 threshold).",
+    "amount_threshold": "Transfer amount $50,000 exceeds $10,000 review threshold for cross-jurisdiction transfers."
+  }
+}

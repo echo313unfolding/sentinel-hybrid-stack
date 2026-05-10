@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "regulated_asset_event.schema.json",
+  "title": "Regulated Asset Event",
+  "description": "A transfer or action request on a regulated asset, submitted to Sentinel for risk assessment.",
+  "type": "object",
+  "required": [
+    "event_id",
+    "event_type",
+    "asset_id",
+    "asset_type",
+    "timestamp",
+    "amount",
+    "currency",
+    "from_entity",
+    "to_entity"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Unique identifier for this event."
+    },
+    "event_type": {
+      "type": "string",
+      "enum": ["transfer", "mint", "burn", "swap", "stake", "unstake", "governance_vote", "other"],
+      "description": "Type of asset event."
+    },
+    "asset_id": {
+      "type": "string",
+      "description": "Identifier for the asset (contract address, token ID, ISIN, etc.)."
+    },
+    "asset_type": {
+      "type": "string",
+      "enum": ["tokenized_equity", "tokenized_bond", "stablecoin", "utility_token", "nft", "commodity_token", "other"],
+      "description": "Category of the regulated asset."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of the event."
+    },
+    "amount": {
+      "type": "number",
+      "description": "Quantity of the asset involved."
+    },
+    "currency": {
+      "type": "string",
+      "description": "Denomination (USD, EUR, ETH, etc.)."
+    },
+    "from_entity": {
+      "type": "object",
+      "required": ["entity_id"],
+      "properties": {
+        "entity_id": { "type": "string" },
+        "entity_type": { "type": "string", "enum": ["individual", "institution", "smart_contract", "unknown"] },
+        "jurisdiction": { "type": "string", "description": "ISO 3166-1 alpha-2 country code." },
+        "wallet_address": { "type": "string" },
+        "kyc_attestation_hash": { "type": "string", "description": "SHA256 of the KYC attestation for this entity." }
+      }
+    },
+    "to_entity": {
+      "type": "object",
+      "required": ["entity_id"],
+      "properties": {
+        "entity_id": { "type": "string" },
+        "entity_type": { "type": "string", "enum": ["individual", "institution", "smart_contract", "unknown"] },
+        "jurisdiction": { "type": "string" },
+        "wallet_address": { "type": "string" },
+        "kyc_attestation_hash": { "type": "string" }
+      }
+    },
+    "chain_metadata": {
+      "type": "object",
+      "description": "Optional blockchain-specific metadata.",
+      "properties": {
+        "chain_id": { "type": "string" },
+        "block_number": { "type": "integer" },
+        "tx_hash": { "type": "string" },
+        "gas_price": { "type": "number" }
+      }
+    },
+    "context": {
+      "type": "object",
+      "description": "Optional additional context for risk assessment.",
+      "properties": {
+        "memo": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "related_event_ids": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kyc_attestation.schema.json",
+  "title": "KYC Attestation",
+  "description": "An identity/KYC attestation from an external provider, consumed by Sentinel. Sentinel does not verify identity — it reads attestations.",
+  "type": "object",
+  "required": [
+    "attestation_id",
+    "provider",
+    "entity_id",
+    "status",
+    "timestamp",
+    "hash"
+  ],
+  "properties": {
+    "attestation_id": {
+      "type": "string",
+      "description": "Unique identifier from the KYC provider."
+    },
+    "provider": {
+      "type": "string",
+      "description": "Name of the KYC/identity provider."
+    },
+    "entity_id": {
+      "type": "string",
+      "description": "Identifier for the entity this attestation covers."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["verified", "pending", "failed", "expired", "revoked"],
+      "description": "Verification status from the provider."
+    },
+    "risk_tier": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "prohibited"],
+      "description": "Provider-assigned risk tier."
+    },
+    "jurisdiction": {
+      "type": "string",
+      "description": "ISO 3166-1 alpha-2 country code of the verified entity."
+    },
+    "verification_level": {
+      "type": "string",
+      "enum": ["basic", "enhanced", "institutional"],
+      "description": "Depth of verification performed."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the attestation was issued."
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the attestation expires."
+    },
+    "hash": {
+      "type": "string",
+      "description": "SHA256 of the canonical attestation content."
+    }
+  }
+}
